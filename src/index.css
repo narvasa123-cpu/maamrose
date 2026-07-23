@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+/* Custom Grid background for alignment preview */
+.bg-grid-pattern {
+  background-size: 20px 20px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+}
+
+/* HIGH-PRECISION PRINT MEDIA STYLING FOR PRE-PRINTED CHECKS & WORD TEMPLATES */
+@media print {
+  body * {
+    visibility: hidden;
+    background: transparent !important;
+  }
+
+  #printable-check-area,
+  #printable-check-area *,
+  #word-template-print-area,
+  #word-template-print-area * {
+    visibility: visible;
+  }
+
+  #printable-check-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 210mm !important;
+    height: 95mm !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    background-image: none !important;
+  }
+
+  #word-template-print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: white !important;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+}

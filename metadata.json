@@ -1,0 +1,6 @@
+{
+  "name": "Check Printing and Voucher Record Management System",
+  "description": "Enterprise Check Printing and Voucher Record Management System with voucher tracking, pre-printed check alignment, document upload, reports, and activity logs.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

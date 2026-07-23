@@ -1,0 +1,193 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User account information with role and status",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "displayName": { "type": "string", "maxLength": 128 },
+        "role": { "type": "string", "enum": ["admin", "staff"] },
+        "department": { "type": "string", "maxLength": 128 },
+        "status": { "type": "string", "enum": ["active", "disabled"] },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "lastLoginAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["uid", "email", "displayName", "role", "status", "createdAt"]
+    },
+    "VoucherRecord": {
+      "title": "VoucherRecord",
+      "description": "Active voucher payment record and particulars",
+      "type": "object",
+      "properties": {
+        "voucherNumber": { "type": "string", "maxLength": 64 },
+        "date": { "type": "string", "maxLength": 32 },
+        "payee": { "type": "string", "maxLength": 256 },
+        "department": { "type": "string", "maxLength": 128 },
+        "particulars": { "type": "string", "maxLength": 1000 },
+        "amount": { "type": "number" },
+        "amountInWords": { "type": "string", "maxLength": 500 },
+        "remarks": { "type": "string", "maxLength": 500 },
+        "status": { "type": "string", "enum": ["Draft", "Pending", "Approved", "Archived"] },
+        "createdBy": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["voucherNumber", "date", "payee", "department", "particulars", "amount", "status", "createdBy"]
+    },
+    "ArchiveVoucher": {
+      "title": "ArchiveVoucher",
+      "description": "Digitized historical archived paper voucher record",
+      "type": "object",
+      "properties": {
+        "voucherNumber": { "type": "string", "maxLength": 64 },
+        "date": { "type": "string", "maxLength": 32 },
+        "payee": { "type": "string", "maxLength": 256 },
+        "department": { "type": "string", "maxLength": 128 },
+        "amount": { "type": "number" },
+        "amountInWords": { "type": "string", "maxLength": 500 },
+        "purpose": { "type": "string", "maxLength": 500 },
+        "description": { "type": "string", "maxLength": 1000 },
+        "remarks": { "type": "string", "maxLength": 500 },
+        "status": { "type": "string", "enum": ["Archived", "Approved", "Paid", "Closed"] },
+        "encodedBy": { "type": "string", "maxLength": 128 },
+        "encodedDate": { "type": "string", "maxLength": 64 },
+        "year": { "type": "number" },
+        "source": { "type": "string", "maxLength": 128 },
+        "storageBox": { "type": "string", "maxLength": 128 },
+        "folderNumber": { "type": "string", "maxLength": 64 },
+        "shelfLocation": { "type": "string", "maxLength": 128 },
+        "physicalReferenceNumber": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["voucherNumber", "date", "payee", "department", "amount", "encodedBy", "encodedDate"]
+    },
+    "CheckRecord": {
+      "title": "CheckRecord",
+      "description": "Record of a check printed for a voucher",
+      "type": "object",
+      "properties": {
+        "checkNumber": { "type": "string", "maxLength": 64 },
+        "voucherId": { "type": "string", "maxLength": 128 },
+        "voucherNumber": { "type": "string", "maxLength": 64 },
+        "date": { "type": "string", "maxLength": 32 },
+        "payee": { "type": "string", "maxLength": 256 },
+        "amount": { "type": "number" },
+        "amountInWords": { "type": "string", "maxLength": 500 },
+        "memo": { "type": "string", "maxLength": 256 },
+        "bankName": { "type": "string", "maxLength": 128 },
+        "status": { "type": "string", "enum": ["Printed", "Void", "Cancelled"] },
+        "printedBy": { "type": "string", "maxLength": 128 },
+        "printedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["checkNumber", "voucherId", "voucherNumber", "date", "payee", "amount", "status", "printedBy"]
+    },
+    "CheckHistoryRecord": {
+      "title": "CheckHistoryRecord",
+      "description": "Detailed log of check print, reprint, and cancellation history",
+      "type": "object",
+      "properties": {
+        "voucherNumber": { "type": "string", "maxLength": 64 },
+        "checkNumber": { "type": "string", "maxLength": 64 },
+        "printedBy": { "type": "string", "maxLength": 128 },
+        "printedDate": { "type": "string", "maxLength": 64 },
+        "printerName": { "type": "string", "maxLength": 128 },
+        "bank": { "type": "string", "maxLength": 128 },
+        "cancelled": { "type": "boolean" },
+        "reprinted": { "type": "boolean" },
+        "printCount": { "type": "number" }
+      },
+      "required": ["voucherNumber", "checkNumber", "printedBy", "printedDate", "bank"]
+    },
+    "ImportLog": {
+      "title": "ImportLog",
+      "description": "Bulk Excel/CSV and ZIP file import audit log",
+      "type": "object",
+      "properties": {
+        "fileName": { "type": "string", "maxLength": 256 },
+        "importedAt": { "type": "string", "maxLength": 64 },
+        "importedBy": { "type": "string", "maxLength": 128 },
+        "totalRows": { "type": "number" },
+        "successCount": { "type": "number" },
+        "skippedCount": { "type": "number" },
+        "errorCount": { "type": "number" }
+      }
+    },
+    "StorageLocation": {
+      "title": "StorageLocation",
+      "description": "Physical box, shelf, and room location for paper records",
+      "type": "object",
+      "properties": {
+        "boxName": { "type": "string", "maxLength": 128 },
+        "shelf": { "type": "string", "maxLength": 128 },
+        "room": { "type": "string", "maxLength": 128 },
+        "capacity": { "type": "number" },
+        "itemCount": { "type": "number" }
+      }
+    },
+    "ActivityLog": {
+      "title": "ActivityLog",
+      "description": "System operation audit log entry",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "userName": { "type": "string", "maxLength": 128 },
+        "userRole": { "type": "string", "enum": ["admin", "staff"] },
+        "action": { "type": "string", "maxLength": 128 },
+        "details": { "type": "string", "maxLength": 500 },
+        "category": { "type": "string" },
+        "timestamp": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["userId", "userName", "userRole", "action", "details", "category", "timestamp"]
+    },
+    "SystemSettings": {
+      "title": "SystemSettings",
+      "description": "System check alignment, bank, and numbering preferences",
+      "type": "object",
+      "properties": {
+        "companyName": { "type": "string", "maxLength": 256 },
+        "companyAddress": { "type": "string", "maxLength": 500 },
+        "defaultBankName": { "type": "string", "maxLength": 128 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profile accounts and permissions"
+    },
+    "/voucher_records/{voucherId}": {
+      "schema": { "$ref": "#/entities/VoucherRecord" },
+      "description": "Voucher payment records"
+    },
+    "/archiveVouchers/{archiveId}": {
+      "schema": { "$ref": "#/entities/ArchiveVoucher" },
+      "description": "Digitized archived historical vouchers"
+    },
+    "/checks/{checkId}": {
+      "schema": { "$ref": "#/entities/CheckRecord" },
+      "description": "Printed check history records"
+    },
+    "/checkHistory/{historyId}": {
+      "schema": { "$ref": "#/entities/CheckHistoryRecord" },
+      "description": "Detailed check print and reprint logs"
+    },
+    "/importLogs/{importId}": {
+      "schema": { "$ref": "#/entities/ImportLog" },
+      "description": "Bulk import audit logs"
+    },
+    "/storageLocations/{locationId}": {
+      "schema": { "$ref": "#/entities/StorageLocation" },
+      "description": "Physical file box locations"
+    },
+    "/activity_logs/{logId}": {
+      "schema": { "$ref": "#/entities/ActivityLog" },
+      "description": "Audit activity log entries"
+    },
+    "/settings/{settingId}": {
+      "schema": { "$ref": "#/entities/SystemSettings" },
+      "description": "Check alignment & company metadata"
+    }
+  }
+}
